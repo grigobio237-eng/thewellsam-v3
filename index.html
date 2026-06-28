@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE WELLSAM - 프리미엄 프라이빗 케어</title>
+    
+    <!-- 폰트 적용 (기존 폰트 + Noto Sans KR 추가) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- 이식된 폼 스타일시트 -->
+    <link rel="stylesheet" href="./form.css">
+    
+    <style>
+        /* 초기화 및 기본 설정 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #000; /* 다크 테마 기반 */
+            color: #fff;
+            font-family: 'Noto Serif KR', serif;
+            line-height: 1.5;
+        }
+
+        /* 상세페이지 컨테이너 (모바일 최적화, PC 중앙 정렬) */
+        .landing-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* PC에서는 너무 커지지 않게 제한 */
+            margin: 0 auto;
+            background-color: #111;
+            padding-bottom: 80px; /* 하단 고정바 공간 확보 */
+        }
+
+        /* 이미지 연속 나열 영역 */
+        .image-stack {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .image-stack img {
+            width: 100%;
+            display: block; /* 이미지 하단 여백 제거 */
+            object-fit: cover;
+        }
+
+        /* 하단 고정 상담 신청 바 (Sticky Bottom Bar) */
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(5, 5, 5, 0.85); /* 매우 어두운 블랙톤의 글래스모피즘 */
+            border-top: 1px solid rgba(212, 175, 55, 0.2); /* 은은한 골드 라인 */
+            padding: 16px 20px; /* 여백 확대 */
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* 하단바 내부 제한 (PC 중앙정렬 유지) */
+        .sticky-bottom-inner {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sticky-text {
+            color: #ddd;
+            font-size: 0.85rem;
+            letter-spacing: 0px;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 300;
+        }
+
+        .sticky-text span.highlight {
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .sticky-btn {
+            background-color: #0c0c0c; /* 명품 스타일 다크 버튼 */
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.4); /* 얇고 우아한 골드 테두리 */
+            padding: 14px 36px;
+            font-family: 'Noto Sans KR', sans-serif; /* 배경 이미지와 동일한 폰트 적용 */
+            font-weight: 500; /* 가독성을 위한 중간 굵기 */
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            border-radius: 2px; /* 살짝 각진 형태가 더 클래식함 */
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 0 0 rgba(212, 175, 55, 0);
+        }
+
+        .sticky-btn:hover {
+            background-color: #d4af37;
+            color: #000;
+            box-shadow: inset 0 0 20px 5px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        /* 모바일 대응 미디어쿼리 */
+        @media (max-width: 600px) {
+            .sticky-bottom-bar {
+                padding: 12px 16px;
+                padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); /* 아이폰 하단 홈바 대응 */
+            }
+            .sticky-text { display: none; } /* 공간 절약을 위해 모바일에서는 텍스트 숨김 */
+            .sticky-bottom-inner { justify-content: center; }
+            .sticky-btn { 
+                width: 100%; 
+                font-size: 1.1rem; 
+                padding: 16px 0; 
+                border-radius: 4px; /* 모바일에선 부드럽게 */
+                background: linear-gradient(180deg, #181818 0%, #0a0a0a 100%);
+                border: 1px solid rgba(212, 175, 55, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-wrap">
+        <!-- 1~15번 이미지 순차 나열 -->
+        <div class="image-stack" id="image-stack-container">
+            <!-- 자바스크립트로 이미지 로드 -->
+        </div>
+    </div>
+
+    <!-- 하단 고정 상담 바 -->
+    <div class="sticky-bottom-bar">
+        <div class="sticky-bottom-inner">
+            <div class="sticky-text">
+                <span class="highlight">프리미엄 세포 재생술</span>
+                <span>전문 의료진 1:1 맞춤 상담</span>
+            </div>
+            <button class="sticky-btn consultation-btn" onclick="openModal()">
+                프라이빗 상담 신청하기
+            </button>
+        </div>
+    </div>
+
+    <!-- 모달 컨테이너 -->
+    <div id="consultation-modal" class="cf-modal-hidden"></div>
+
+    <!-- 폼 로직 스크립트 연결 -->
+    <script type="module" src="./form.js"></script>
+
+    <!-- 이미지 로더 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('image-stack-container');
+            let imagesHtml = '';
+            // 그림1.webp ~ 그림15.webp
+            for (let i = 1; i <= 15; i++) {
+                // width/height 속성은 제거하거나 auto로 처리 (반응형을 위해 CSS에 위임)
+                imagesHtml += `<img src="./그림${i}.webp" alt="상세페이지 이미지 ${i}" loading="${i <= 3 ? 'eager' : 'lazy'}">`;
+            }
+            container.innerHTML = imagesHtml;
+        });
+    </script>
+</body>
+</html>
