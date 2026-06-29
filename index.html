@@ -52,89 +52,91 @@
             object-fit: cover;
         }
 
-        /* 하단 고정 상담 신청 바 (Sticky Bottom Bar) */
-        .sticky-bottom-bar {
+        /* 우측 플로팅 상담 풍선 (Floating Balloon) */
+        .floating-balloon {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(5, 5, 5, 0.85); /* 매우 어두운 블랙톤의 글래스모피즘 */
-            border-top: 1px solid rgba(212, 175, 55, 0.2); /* 은은한 골드 라인 */
-            padding: 16px 20px; /* 여백 확대 */
-            z-index: 999;
+            top: 10%; /* 상단에서 10% 위치 */
+            right: 20px;
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(135deg, #181818 0%, #0a0a0a 100%);
+            border: 1px solid rgba(212, 175, 55, 0.5); /* 우아한 골드 테두리 */
+            border-radius: 50%; /* 완전한 원형 */
             display: flex;
+            flex-direction: column; /* 아이콘과 텍스트 세로 배치 */
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-        }
-
-        /* 하단바 내부 제한 (PC 중앙정렬 유지) */
-        .sticky-bottom-inner {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sticky-text {
-            color: #ddd;
-            font-size: 0.85rem;
-            letter-spacing: 0px;
-            display: flex;
-            flex-direction: column;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 300;
-        }
-
-        .sticky-text span.highlight {
-            color: #d4af37;
-            font-family: 'Cinzel', serif;
-            font-weight: 500;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
-        }
-
-        .sticky-btn {
-            background-color: #0c0c0c; /* 명품 스타일 다크 버튼 */
-            color: #d4af37;
-            border: 1px solid rgba(212, 175, 55, 0.4); /* 얇고 우아한 골드 테두리 */
-            padding: 14px 36px;
-            font-family: 'Noto Sans KR', sans-serif; /* 배경 이미지와 동일한 폰트 적용 */
-            font-weight: 500; /* 가독성을 위한 중간 굵기 */
-            font-size: 1.05rem;
-            letter-spacing: 1px;
-            border-radius: 2px; /* 살짝 각진 형태가 더 클래식함 */
+            padding: 0;
+            z-index: 9999; /* 다른 요소들 위로 확실히 띄움 */
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: inset 0 0 0 0 rgba(212, 175, 55, 0);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float-animation 3s ease-in-out infinite;
         }
 
-        .sticky-btn:hover {
-            background-color: #d4af37;
-            color: #000;
-            box-shadow: inset 0 0 20px 5px rgba(212, 175, 55, 0.2);
+        .floating-balloon:hover {
+            transform: translateY(-5px) scale(1.05);
             border-color: #d4af37;
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+            animation-play-state: paused;
+        }
+
+        .floating-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0; /* 가로 마진 제거 */
+            margin-bottom: 4px; /* 텍스트와의 세로 간격 */
+            color: #d4af37;
+        }
+
+        .floating-icon svg {
+            width: 22px;
+            height: 22px;
+            animation: pulse-icon 2s infinite;
+        }
+
+        .floating-text {
+            color: #d4af37;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem; /* 텍스트 크기 축소 */
+            letter-spacing: 0px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        @keyframes float-animation {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* 모바일 대응 미디어쿼리 */
         @media (max-width: 600px) {
-            .sticky-bottom-bar {
-                padding: 12px 16px;
-                padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); /* 아이폰 하단 홈바 대응 */
+            .floating-balloon {
+                top: 10%; /* 모바일에서도 동일하게 상단에서 10% 위치 */
+                right: 15px; /* 화면 밖으로 밀리지 않도록 조정 */
+                width: 68px;
+                height: 68px;
+                border-radius: 50%;
+                padding: 0;
             }
-            .sticky-text { display: none; } /* 공간 절약을 위해 모바일에서는 텍스트 숨김 */
-            .sticky-bottom-inner { justify-content: center; }
-            .sticky-btn { 
-                width: 100%; 
-                font-size: 1.1rem; 
-                padding: 16px 0; 
-                border-radius: 4px; /* 모바일에선 부드럽게 */
-                background: linear-gradient(180deg, #181818 0%, #0a0a0a 100%);
-                border: 1px solid rgba(212, 175, 55, 0.3);
+            .floating-icon {
+                margin-bottom: 2px;
+            }
+            .floating-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .floating-text {
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -148,17 +150,14 @@
         </div>
     </div>
 
-    <!-- 하단 고정 상담 바 -->
-    <div class="sticky-bottom-bar">
-        <div class="sticky-bottom-inner">
-            <div class="sticky-text">
-                <span class="highlight">프리미엄 세포 재생술</span>
-                <span>전문 의료진 1:1 맞춤 상담</span>
-            </div>
-            <button class="sticky-btn consultation-btn" onclick="openModal()">
-                프라이빗 상담 신청하기
-            </button>
+    <!-- 우측 플로팅 상담 풍선 (Floating Balloon) -->
+    <div class="floating-balloon consultation-btn" onclick="openModal()">
+        <div class="floating-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
         </div>
+        <div class="floating-text">상담신청</div>
     </div>
 
     <!-- 모달 컨테이너 -->
